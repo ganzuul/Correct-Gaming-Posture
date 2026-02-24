@@ -66,4 +66,8 @@ public class GameRendererMixin {
     cir.setReturnValue((double) targetFov);
   }
  */
+
+  // Head tracking - apply roll rotation if enabled
+  // Note: Roll support can be added here if needed for future head tracking
+  // Current implementation handles positional and yaw/pitch through Camera mixin
 }

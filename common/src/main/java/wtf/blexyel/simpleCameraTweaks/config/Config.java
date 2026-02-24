@@ -11,6 +11,11 @@ public class Config {
   public static boolean smooth = false;
   public static boolean offhand = false;
 
+  // Head Tracking Configuration
+  public static boolean enableHeadTracking = false;
+  public static double displayDistance = 0.3; // meters
+  public static float headTrackingSmoothing = 0.8f; // 0-1, higher = smoother
+
   private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
   private static final File CONFIG_FILE = new File("config/simple_camera_tweaks.json");
 
@@ -35,6 +40,17 @@ public class Config {
         smooth = json.get("smooth").getAsBoolean();
       }
 
+      // Load head tracking config
+      if (json.has("enableHeadTracking")) {
+        enableHeadTracking = json.get("enableHeadTracking").getAsBoolean();
+      }
+      if (json.has("displayDistance")) {
+        displayDistance = json.get("displayDistance").getAsDouble();
+      }
+      if (json.has("headTrackingSmoothing")) {
+        headTrackingSmoothing = json.get("headTrackingSmoothing").getAsFloat();
+      }
+
     } catch (IOException | JsonParseException e) {
       e.printStackTrace();
     }
@@ -47,6 +63,9 @@ public class Config {
       JsonObject json = new JsonObject();
       json.addProperty("smooth", smooth);
       json.addProperty("offhand", offhand);
+      json.addProperty("enableHeadTracking", enableHeadTracking);
+      json.addProperty("displayDistance", displayDistance);
+      json.addProperty("headTrackingSmoothing", headTrackingSmoothing);
 
       try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
         GSON.toJson(json, writer);
