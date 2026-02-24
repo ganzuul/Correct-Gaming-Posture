@@ -17,6 +17,14 @@ public final class SimpleCameraTweaks {
     Config.load();
     KeybindHelper.load();
 
+    // Initialize head tracking if enabled
+    if (Config.enableHeadTracking) {
+      LOGGER.info("[Head Tracking] 👁️ Head tracking enabled via config");
+      wtf.blexyel.simpleCameraTweaks.opentrack.OpentrackReceiver.start();
+    } else {
+      LOGGER.info("[Head Tracking] 👁️ Head tracking disabled (enable in config)");
+    }
+
     ClientTickEvent.CLIENT_POST.register(
         (client) -> {
           FreelookUtils.tick();
