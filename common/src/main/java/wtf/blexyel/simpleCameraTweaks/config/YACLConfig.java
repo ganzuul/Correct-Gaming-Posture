@@ -68,7 +68,7 @@ public class YACLConfig {
                                 Component.literal("Distance from viewer to display screen in meters. Used for head-coupled perspective parallax calculation.")))
                         .binding(
                             (float) Config.displayDistance, () -> (float) Config.displayDistance, newVal -> Config.displayDistance = (double) newVal)
-                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.1f, 2.0f).step(0.05f))
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.01f, 2.0f).step(0.01f))
                         .build())
                 .option(
                     Option.<Float>createBuilder()
@@ -79,6 +79,114 @@ public class YACLConfig {
                         .binding(
                             Config.headTrackingSmoothing, () -> Config.headTrackingSmoothing, newVal -> Config.headTrackingSmoothing = newVal)
                         .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0f, 1.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("Horizontal Gain"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Scales left/right head translation contribution.")))
+                        .binding(
+                            Config.headTrackingGainX, () -> Config.headTrackingGainX, newVal -> Config.headTrackingGainX = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0f, 3.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("Vertical Gain"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Scales up/down head translation contribution.")))
+                        .binding(
+                            Config.headTrackingGainY, () -> Config.headTrackingGainY, newVal -> Config.headTrackingGainY = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0f, 3.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("Depth Gain"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Scales forward/back head translation contribution.")))
+                        .binding(
+                            Config.headTrackingGainZ, () -> Config.headTrackingGainZ, newVal -> Config.headTrackingGainZ = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0f, 3.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("Max Horizontal Offset"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Maximum left/right camera translation from head tracking in blocks.")))
+                        .binding(
+                            Config.headTrackingMaxHorizontal, () -> Config.headTrackingMaxHorizontal, newVal -> Config.headTrackingMaxHorizontal = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.1f, 3.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("Max Vertical Offset"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Maximum up/down camera translation from head tracking in blocks.")))
+                        .binding(
+                            Config.headTrackingMaxVertical, () -> Config.headTrackingMaxVertical, newVal -> Config.headTrackingMaxVertical = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.1f, 3.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("Max Depth Offset"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Maximum forward/back camera translation from head tracking in blocks.")))
+                        .binding(
+                            Config.headTrackingMaxDepth, () -> Config.headTrackingMaxDepth, newVal -> Config.headTrackingMaxDepth = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.1f, 3.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("3rd-Person Pivot Start Distance"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Camera-to-head distance where pivot effect begins in third person.")))
+                        .binding(
+                            (float) Config.thirdPersonPivotStartDistance,
+                            () -> (float) Config.thirdPersonPivotStartDistance,
+                            newVal -> Config.thirdPersonPivotStartDistance = (double) newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.0f, 6.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("3rd-Person Pivot Full Distance"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Camera-to-head distance where pivot multiplier reaches its full strength.")))
+                        .binding(
+                            (float) Config.thirdPersonPivotFullDistance,
+                            () -> (float) Config.thirdPersonPivotFullDistance,
+                            newVal -> Config.thirdPersonPivotFullDistance = (double) newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.1f, 8.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("3rd-Person Pivot Strength"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("Maximum pivot blend multiplier in third person.")))
+                        .binding(
+                            Config.thirdPersonPivotStrength,
+                            () -> Config.thirdPersonPivotStrength,
+                            newVal -> Config.thirdPersonPivotStrength = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.0f, 2.0f).step(0.05f))
+                        .build())
+                .option(
+                    Option.<Float>createBuilder()
+                        .name(Component.literal("3rd-Person Pivot Angle Scale"))
+                        .description(
+                            OptionDescription.of(
+                                Component.literal("How strongly translation is converted into pivot arc movement in third person.")))
+                        .binding(
+                            Config.thirdPersonPivotAngleScale,
+                            () -> Config.thirdPersonPivotAngleScale,
+                            newVal -> Config.thirdPersonPivotAngleScale = newVal)
+                        .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0.0f, 1.0f).step(0.01f))
                         .build())
                 .build())
         .save(Config::save)

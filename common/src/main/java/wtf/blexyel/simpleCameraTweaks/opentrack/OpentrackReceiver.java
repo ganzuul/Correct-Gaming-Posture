@@ -87,8 +87,8 @@ public class OpentrackReceiver implements Runnable {
                         hasReceivedData = true;
                     }
                     SimpleCameraTweaks.LOGGER.info(String.format(
-                        "[Head Tracking] Y:%.1f° P:%.1f° R:%.1f° | Pos:(%.2f, %.2f, %.2f)",
-                        yaw, pitch, roll, x, y, z
+                        "[Head Tracking] Y:%.1f° P:%.1f° | Pos:(%.2f, %.2f, %.2f)",
+                        yaw, pitch, x, y, z
                     ));
                 }
             }
