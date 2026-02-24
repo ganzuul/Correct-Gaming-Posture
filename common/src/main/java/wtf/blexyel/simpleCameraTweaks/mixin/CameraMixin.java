@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import wtf.blexyel.simpleCameraTweaks.config.Config;
 import wtf.blexyel.simpleCameraTweaks.opentrack.OpentrackReceiver;
@@ -27,7 +28,8 @@ public abstract class CameraMixin {
   @Unique private float smoothedTrackX = 0.0f;
   @Unique private float smoothedTrackY = 0.0f;
   @Unique private float smoothedTrackZ = 0.0f;
-  @Unique private static final float MAX_HEAD_OFFSET = 0.35f;
+  @Unique private float lastVanillaCameraDistance = 0.0f;
+  @Unique private static final float MIN_DISPLAY_DISTANCE_METERS = 0.01f;
 
   @Inject(
       method = "setup",
@@ -43,6 +45,7 @@ public abstract class CameraMixin {
       boolean inverseView,
       float tickDelta,
       CallbackInfo ci) {
+    lastVanillaCameraDistance = 0.0f;
     if (!(focusedEntity instanceof Player)) return;
 
     if (FreelookUtils.active) {
@@ -57,6 +60,15 @@ public abstract class CameraMixin {
       this.setRotation(fl.getCameraX(), fl.getCameraY());
     }
 
+  }
+
+  @ModifyArg(
+      method = "setup",
+      at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;move(FFF)V"),
+      index = 0)
+  private float captureVanillaCameraDistance(float distanceOffset) {
+    lastVanillaCameraDistance = Math.abs(distanceOffset);
+    return distanceOffset;
   }
 
   @Inject(method = "setup", at = @At("TAIL"))
@@ -76,14 +88,49 @@ public abstract class CameraMixin {
     smoothedTrackY = smoothedTrackY * smoothing + (float) OpentrackReceiver.y * blend;
     smoothedTrackZ = smoothedTrackZ * smoothing + (float) OpentrackReceiver.z * blend;
 
-    float displayDistance = (float) Math.max(0.1d, Config.displayDistance);
+    float displayDistance = (float) Math.max(MIN_DISPLAY_DISTANCE_METERS, Config.displayDistance);
     float scale = 0.35f / displayDistance;
 
-    float horizontalOffset = clamp(-smoothedTrackX * scale, -MAX_HEAD_OFFSET, MAX_HEAD_OFFSET);
-    float verticalOffset = clamp(smoothedTrackY * scale, -MAX_HEAD_OFFSET, MAX_HEAD_OFFSET);
-    float distanceOffset = clamp(-smoothedTrackZ * scale, -MAX_HEAD_OFFSET, MAX_HEAD_OFFSET);
+    float horizontalLimit = Math.max(0.01f, Config.headTrackingMaxHorizontal);
+    float verticalLimit = Math.max(0.01f, Config.headTrackingMaxVertical);
+    float depthLimit = Math.max(0.01f, Config.headTrackingMaxDepth);
+
+    float horizontalOffset = clamp(-smoothedTrackX * scale * Config.headTrackingGainX, -horizontalLimit, horizontalLimit);
+    float verticalOffset = clamp(smoothedTrackY * scale * Config.headTrackingGainY, -verticalLimit, verticalLimit);
+    float distanceOffset = clamp(-smoothedTrackZ * scale * Config.headTrackingGainZ, -depthLimit, depthLimit);
+
+    float cameraDistanceFromHead = thirdPerson ? lastVanillaCameraDistance : 0.0f;
+
+    float pivotMultiplier = getPivotMultiplier(thirdPerson, cameraDistanceFromHead);
+    if (pivotMultiplier > 0.0f) {
+      float pivotAngleScale = Math.max(0.0f, Config.thirdPersonPivotAngleScale);
+      float yawAngle = horizontalOffset * pivotAngleScale;
+      float pitchAngle = verticalOffset * pivotAngleScale;
+
+      float pivotHorizontal = (float) (Math.sin(yawAngle) * cameraDistanceFromHead);
+      float pivotVertical = (float) (Math.sin(pitchAngle) * cameraDistanceFromHead);
+      float pivotDistance =
+          (float) (((Math.cos(yawAngle) - 1.0) + (Math.cos(pitchAngle) - 1.0)) * cameraDistanceFromHead);
+
+      horizontalOffset += pivotHorizontal * pivotMultiplier;
+      verticalOffset += pivotVertical * pivotMultiplier;
+      distanceOffset += pivotDistance * pivotMultiplier;
+    }
 
     this.move(distanceOffset, verticalOffset, horizontalOffset);
+  }
+
+  @Unique
+  private static float getPivotMultiplier(boolean thirdPerson, float cameraDistanceFromHead) {
+    if (!thirdPerson) {
+      return 0.0f;
+    }
+
+    float startDistance = Math.max(0.0f, (float) Config.thirdPersonPivotStartDistance);
+    float fullDistance = Math.max(startDistance + 0.001f, (float) Config.thirdPersonPivotFullDistance);
+    float normalized = (cameraDistanceFromHead - startDistance) / (fullDistance - startDistance);
+    float strength = Math.max(0.0f, Config.thirdPersonPivotStrength);
+    return clamp(normalized, 0.0f, 1.0f) * strength;
   }
 
   @Unique

@@ -15,6 +15,16 @@ public class Config {
   public static boolean enableHeadTracking = false;
   public static double displayDistance = 0.3; // meters
   public static float headTrackingSmoothing = 0.8f; // 0-1, higher = smoother
+  public static float headTrackingGainX = 1.0f;
+  public static float headTrackingGainY = 1.0f;
+  public static float headTrackingGainZ = 1.0f;
+  public static float headTrackingMaxHorizontal = 1.25f;
+  public static float headTrackingMaxVertical = 0.9f;
+  public static float headTrackingMaxDepth = 1.25f;
+  public static double thirdPersonPivotStartDistance = 0.75; // blocks
+  public static double thirdPersonPivotFullDistance = 4.0; // blocks
+  public static float thirdPersonPivotStrength = 1.0f; // multiplier
+  public static float thirdPersonPivotAngleScale = 0.25f; // radians per block of offset
 
   private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
   private static final File CONFIG_FILE = new File("config/simple_camera_tweaks.json");
@@ -50,6 +60,36 @@ public class Config {
       if (json.has("headTrackingSmoothing")) {
         headTrackingSmoothing = json.get("headTrackingSmoothing").getAsFloat();
       }
+      if (json.has("headTrackingGainX")) {
+        headTrackingGainX = json.get("headTrackingGainX").getAsFloat();
+      }
+      if (json.has("headTrackingGainY")) {
+        headTrackingGainY = json.get("headTrackingGainY").getAsFloat();
+      }
+      if (json.has("headTrackingGainZ")) {
+        headTrackingGainZ = json.get("headTrackingGainZ").getAsFloat();
+      }
+      if (json.has("headTrackingMaxHorizontal")) {
+        headTrackingMaxHorizontal = json.get("headTrackingMaxHorizontal").getAsFloat();
+      }
+      if (json.has("headTrackingMaxVertical")) {
+        headTrackingMaxVertical = json.get("headTrackingMaxVertical").getAsFloat();
+      }
+      if (json.has("headTrackingMaxDepth")) {
+        headTrackingMaxDepth = json.get("headTrackingMaxDepth").getAsFloat();
+      }
+      if (json.has("thirdPersonPivotStartDistance")) {
+        thirdPersonPivotStartDistance = json.get("thirdPersonPivotStartDistance").getAsDouble();
+      }
+      if (json.has("thirdPersonPivotFullDistance")) {
+        thirdPersonPivotFullDistance = json.get("thirdPersonPivotFullDistance").getAsDouble();
+      }
+      if (json.has("thirdPersonPivotStrength")) {
+        thirdPersonPivotStrength = json.get("thirdPersonPivotStrength").getAsFloat();
+      }
+      if (json.has("thirdPersonPivotAngleScale")) {
+        thirdPersonPivotAngleScale = json.get("thirdPersonPivotAngleScale").getAsFloat();
+      }
 
     } catch (IOException | JsonParseException e) {
       e.printStackTrace();
@@ -66,6 +106,16 @@ public class Config {
       json.addProperty("enableHeadTracking", enableHeadTracking);
       json.addProperty("displayDistance", displayDistance);
       json.addProperty("headTrackingSmoothing", headTrackingSmoothing);
+      json.addProperty("headTrackingGainX", headTrackingGainX);
+      json.addProperty("headTrackingGainY", headTrackingGainY);
+      json.addProperty("headTrackingGainZ", headTrackingGainZ);
+      json.addProperty("headTrackingMaxHorizontal", headTrackingMaxHorizontal);
+      json.addProperty("headTrackingMaxVertical", headTrackingMaxVertical);
+      json.addProperty("headTrackingMaxDepth", headTrackingMaxDepth);
+      json.addProperty("thirdPersonPivotStartDistance", thirdPersonPivotStartDistance);
+      json.addProperty("thirdPersonPivotFullDistance", thirdPersonPivotFullDistance);
+      json.addProperty("thirdPersonPivotStrength", thirdPersonPivotStrength);
+      json.addProperty("thirdPersonPivotAngleScale", thirdPersonPivotAngleScale);
 
       try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
         GSON.toJson(json, writer);
