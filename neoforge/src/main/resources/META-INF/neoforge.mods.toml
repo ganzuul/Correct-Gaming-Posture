@@ -4,38 +4,37 @@ loaderVersion = "[2,)"
 license = "MIT"
 
 [[mods]]
-modId = "simple_camera_tweaks"
+modId = "correct_gaming_posture"
 version = "${version}_neoforge"
-displayName = "simple-camera-tweaks"
+displayName = "Correct Gaming Posture"
 authors = "Blexyel"
 description = '''
-simple camera tweaks ig.
-Adds freelook, zoom and double hands.
+Adds freelook, zoom, double hands, and head-tracking camera posture support.
 '''
-logoFile = "assets/simple_camera_tweaks/icon.png"
+logoFile = "assets/correct_gaming_posture/icon.png"
 
-[[dependencies.simple_camera_tweaks]]
+[[dependencies.correct_gaming_posture]]
 modId = "neoforge"
 type = "required"
 versionRange = "[21,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.simple_camera_tweaks]]
+[[dependencies.correct_gaming_posture]]
 modId = "minecraft"
 type = "required"
 versionRange = "[1.21.9,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.simple_camera_tweaks]]
+[[dependencies.correct_gaming_posture]]
 modId = "architectury"
 type = "required"
 versionRange = "[13.0.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.simple_camera_tweaks]]
+[[dependencies.correct_gaming_posture]]
 modId="yet_another_config_lib_v3"
 mandatory=true
 versionRange="*"
@@ -43,4 +42,4 @@ ordering="NONE"
 side="CLIENT"
 
 [[mixins]]
-config = "simple-camera-tweaks.mixins.json"
+config = "correct-gaming-posture.mixins.json"

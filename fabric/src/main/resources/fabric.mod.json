@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "simple_camera_tweaks",
+  "id": "correct_gaming_posture",
   "version": "${version}_fabric",
-  "name": "simple-camera-tweaks",
-  "description": "simple camera tweaks ig.\n\nAdds freelook, zoom and double hands.",
+  "name": "Correct Gaming Posture",
+  "description": "Adds freelook, zoom, double hands, and head-tracking camera posture support.",
   "authors": [
     "Blexyel"
   ],
@@ -11,7 +11,7 @@
     "homepage": "https://github.com/Blexyel/simplehud"
   },
   "license": "MIT",
-  "icon": "assets/simple_camera_tweaks/icon.png",
+  "icon": "assets/correct_gaming_posture/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -22,7 +22,7 @@
     ]
   },
   "mixins": [
-    "simple-camera-tweaks.mixins.json"
+    "correct-gaming-posture.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.17.0",

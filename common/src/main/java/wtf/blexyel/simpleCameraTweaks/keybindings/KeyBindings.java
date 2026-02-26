@@ -8,18 +8,18 @@ import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyBindings {
-  public static Category CATEGORY = KeyMapping.Category.register(Identifier.parse("simple_camera_tweaks.main"));
+  public static Category CATEGORY = KeyMapping.Category.register(Identifier.parse("correct_gaming_posture.main"));
 
-  public static final KeyMapping FREELOOK_KEY = new KeyMapping("key.simple_camera_tweaks.freelook",
+  public static final KeyMapping FREELOOK_KEY = new KeyMapping("key.correct_gaming_posture.freelook",
       InputConstants.Type.MOUSE,
       4,
       CATEGORY);
 
-  public static final KeyMapping ZOOM_KEY = new KeyMapping("key.simple_camera_tweaks.zoom",
+  public static final KeyMapping ZOOM_KEY = new KeyMapping("key.correct_gaming_posture.zoom",
       InputConstants.KEY_C,
       CATEGORY);
 
-  public static final KeyMapping OFFHAND_KEY = new KeyMapping("key.simple_camera_tweaks.offhand",
+  public static final KeyMapping OFFHAND_KEY = new KeyMapping("key.correct_gaming_posture.offhand",
       InputConstants.KEY_APOSTROPHE,
       CATEGORY);
 

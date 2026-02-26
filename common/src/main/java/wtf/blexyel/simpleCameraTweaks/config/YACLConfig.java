@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 public class YACLConfig {
   public static Screen create(Screen parent) {
     return YetAnotherConfigLib.createBuilder()
-        .title(Component.literal("Simple Camera Tweaks Config"))
+        .title(Component.literal("Correct Gaming Posture Config"))
         .category(
             ConfigCategory.createBuilder()
                 .name(Component.literal("General"))

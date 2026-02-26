@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'simple_camera_tweaks'
+rootProject.name = 'correct_gaming_posture'
 
 include 'common'
 include 'fabric'

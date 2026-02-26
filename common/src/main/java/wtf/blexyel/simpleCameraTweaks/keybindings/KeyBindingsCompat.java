@@ -9,24 +9,24 @@ public class KeyBindingsCompat {
   public static KeyMapping FREELOOK_KEY;
   public static KeyMapping ZOOM_KEY;
   public static KeyMapping OFFHAND_KEY;
-  public static String CATEGORY = "key.category.minecraft.simple_camera_tweaks.main";
+  public static String CATEGORY = "key.category.minecraft.correct_gaming_posture.main";
 
   static {
     try {
       Constructor<KeyMapping> constructor = KeyMapping.class.getConstructor(String.class,
           InputConstants.Type.class, int.class, String.class);
 
-      FREELOOK_KEY = constructor.newInstance("key.simple_camera_tweaks.freelook",
+        FREELOOK_KEY = constructor.newInstance("key.correct_gaming_posture.freelook",
           InputConstants.Type.MOUSE,
           4,
           CATEGORY);
 
-      ZOOM_KEY = constructor.newInstance("key.simple_camera_tweaks.zoom",
+        ZOOM_KEY = constructor.newInstance("key.correct_gaming_posture.zoom",
           InputConstants.Type.KEYSYM,
           InputConstants.KEY_C,
           CATEGORY);
 
-      OFFHAND_KEY = constructor.newInstance("key.simple_camera_tweaks.offhand",
+        OFFHAND_KEY = constructor.newInstance("key.correct_gaming_posture.offhand",
           InputConstants.Type.KEYSYM,
           InputConstants.KEY_APOSTROPHE,
           CATEGORY);
