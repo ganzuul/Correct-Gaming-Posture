@@ -1,9 +1,29 @@
-# Simple Camera Tweaks
-![Modrinth Version](https://img.shields.io/modrinth/v/3khdYILU)
-![Modrinth Downloads](https://img.shields.io/modrinth/dt/3khdYILU)
-<a href="https://ko-fi.com/K3K6QJKW9">
-<img src="https://ko-fi.com/img/githubbutton_sm.svg" height="20" />
-</a>
+# Correct Gaming Posture
 
-<br>
-I will try to update this mod as quickly as possible to the latest version, but no guarantees. Latest snapshot update is not possible right now, due to dependencies, that aren't updated yet. 
+Flat screen pseudo-VR with webcam headtracking. - Look around corners by moving your head IRL.
+
+![Correct posture illustration](docs/assets/correct-posture.jpg)
+
+## 1st Public Release
+
+Base functionality working as desired. You may want to tweak the settings, in particular the view distance.
+
+## Requirements
+
+Just a regular webcam, better hardware also supported.
+
+## Use
+
+1. Get Opentrack, may have to compile it yourself with ONNX to get NeuralNet Tracker input
+2. Start Opentrack on output UDP, 1270.0.0.1 port 42424 (default)
+3. Load mod with Minecraft, use Mod Menu to enable Headtracking in its tab, adjust the settings
+4. Correct Gaming Posture!
+
+## Credits
+
+- Base mod by [Blexyel](https://github.com/Blexyel)
+- Original project: [Simple Camera Tweaks](https://modrinth.com/mod/simple-camera-tweaks)
+
+## Migration Notes
+
+- Existing configs at `config/simple_camera_tweaks.json` are automatically migrated to `config/correct_gaming_posture.json` on first launch.

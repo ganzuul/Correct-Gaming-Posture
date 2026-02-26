@@ -9,7 +9,7 @@ import wtf.blexyel.simpleCameraTweaks.util.FreelookUtils;
 
 public final class SimpleCameraTweaks {
 
-  public static final String MOD_ID = "simple_camera_tweaks";
+  public static final String MOD_ID = "correct_gaming_posture";
 
   public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 

@@ -27,72 +27,90 @@ public class Config {
   public static float thirdPersonPivotAngleScale = 0.25f; // radians per block of offset
 
   private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-  private static final File CONFIG_FILE = new File("config/simple_camera_tweaks.json");
+  private static final File CONFIG_FILE = new File("config/correct_gaming_posture.json");
+  private static final File LEGACY_CONFIG_FILE = new File("config/simple_camera_tweaks.json");
 
   public static void load() {
-    if (!CONFIG_FILE.exists()) {
+    File sourceFile = CONFIG_FILE;
+    boolean migratedFromLegacy = false;
+
+    if (!CONFIG_FILE.exists() && LEGACY_CONFIG_FILE.exists()) {
+      sourceFile = LEGACY_CONFIG_FILE;
+      migratedFromLegacy = true;
+      SimpleCameraTweaks.LOGGER.info("Found legacy config at {}. Migrating to {}.", LEGACY_CONFIG_FILE.getPath(),
+          CONFIG_FILE.getPath());
+    }
+
+    if (!sourceFile.exists()) {
       save(); // create default config file if missing
       return;
     }
 
-    try (FileReader reader = new FileReader(CONFIG_FILE)) {
+    try (FileReader reader = new FileReader(sourceFile)) {
       JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
+      loadFromJson(json);
 
-      // Migrate "enabled" -> "offhand" if present
-      if (json.has("enabled") && !json.has("offhand")) {
-        offhand = json.get("enabled").getAsBoolean();
-        SimpleCameraTweaks.LOGGER.info("Migrated 'enabled' to 'offhand'");
-      } else if (json.has("offhand")) {
-        offhand = json.get("offhand").getAsBoolean();
-      }
-
-      if (json.has("smooth")) {
-        smooth = json.get("smooth").getAsBoolean();
-      }
-
-      // Load head tracking config
-      if (json.has("enableHeadTracking")) {
-        enableHeadTracking = json.get("enableHeadTracking").getAsBoolean();
-      }
-      if (json.has("displayDistance")) {
-        displayDistance = json.get("displayDistance").getAsDouble();
-      }
-      if (json.has("headTrackingSmoothing")) {
-        headTrackingSmoothing = json.get("headTrackingSmoothing").getAsFloat();
-      }
-      if (json.has("headTrackingGainX")) {
-        headTrackingGainX = json.get("headTrackingGainX").getAsFloat();
-      }
-      if (json.has("headTrackingGainY")) {
-        headTrackingGainY = json.get("headTrackingGainY").getAsFloat();
-      }
-      if (json.has("headTrackingGainZ")) {
-        headTrackingGainZ = json.get("headTrackingGainZ").getAsFloat();
-      }
-      if (json.has("headTrackingMaxHorizontal")) {
-        headTrackingMaxHorizontal = json.get("headTrackingMaxHorizontal").getAsFloat();
-      }
-      if (json.has("headTrackingMaxVertical")) {
-        headTrackingMaxVertical = json.get("headTrackingMaxVertical").getAsFloat();
-      }
-      if (json.has("headTrackingMaxDepth")) {
-        headTrackingMaxDepth = json.get("headTrackingMaxDepth").getAsFloat();
-      }
-      if (json.has("thirdPersonPivotStartDistance")) {
-        thirdPersonPivotStartDistance = json.get("thirdPersonPivotStartDistance").getAsDouble();
-      }
-      if (json.has("thirdPersonPivotFullDistance")) {
-        thirdPersonPivotFullDistance = json.get("thirdPersonPivotFullDistance").getAsDouble();
-      }
-      if (json.has("thirdPersonPivotStrength")) {
-        thirdPersonPivotStrength = json.get("thirdPersonPivotStrength").getAsFloat();
-      }
-      if (json.has("thirdPersonPivotAngleScale")) {
-        thirdPersonPivotAngleScale = json.get("thirdPersonPivotAngleScale").getAsFloat();
+      if (migratedFromLegacy) {
+        save();
       }
 
     } catch (IOException | JsonParseException e) {
       e.printStackTrace();
+    }
+  }
+
+  private static void loadFromJson(JsonObject json) {
+    // Migrate "enabled" -> "offhand" if present
+    if (json.has("enabled") && !json.has("offhand")) {
+      offhand = json.get("enabled").getAsBoolean();
+      SimpleCameraTweaks.LOGGER.info("Migrated 'enabled' to 'offhand'");
+    } else if (json.has("offhand")) {
+      offhand = json.get("offhand").getAsBoolean();
+    }
+
+    if (json.has("smooth")) {
+      smooth = json.get("smooth").getAsBoolean();
+    }
+
+    // Load head tracking config
+    if (json.has("enableHeadTracking")) {
+      enableHeadTracking = json.get("enableHeadTracking").getAsBoolean();
+    }
+    if (json.has("displayDistance")) {
+      displayDistance = json.get("displayDistance").getAsDouble();
+    }
+    if (json.has("headTrackingSmoothing")) {
+      headTrackingSmoothing = json.get("headTrackingSmoothing").getAsFloat();
+    }
+    if (json.has("headTrackingGainX")) {
+      headTrackingGainX = json.get("headTrackingGainX").getAsFloat();
+    }
+    if (json.has("headTrackingGainY")) {
+      headTrackingGainY = json.get("headTrackingGainY").getAsFloat();
+    }
+    if (json.has("headTrackingGainZ")) {
+      headTrackingGainZ = json.get("headTrackingGainZ").getAsFloat();
+    }
+    if (json.has("headTrackingMaxHorizontal")) {
+      headTrackingMaxHorizontal = json.get("headTrackingMaxHorizontal").getAsFloat();
+    }
+    if (json.has("headTrackingMaxVertical")) {
+      headTrackingMaxVertical = json.get("headTrackingMaxVertical").getAsFloat();
+    }
+    if (json.has("headTrackingMaxDepth")) {
+      headTrackingMaxDepth = json.get("headTrackingMaxDepth").getAsFloat();
+    }
+    if (json.has("thirdPersonPivotStartDistance")) {
+      thirdPersonPivotStartDistance = json.get("thirdPersonPivotStartDistance").getAsDouble();
+    }
+    if (json.has("thirdPersonPivotFullDistance")) {
+      thirdPersonPivotFullDistance = json.get("thirdPersonPivotFullDistance").getAsDouble();
+    }
+    if (json.has("thirdPersonPivotStrength")) {
+      thirdPersonPivotStrength = json.get("thirdPersonPivotStrength").getAsFloat();
+    }
+    if (json.has("thirdPersonPivotAngleScale")) {
+      thirdPersonPivotAngleScale = json.get("thirdPersonPivotAngleScale").getAsFloat();
     }
   }
 
