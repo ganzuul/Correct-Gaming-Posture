@@ -4,7 +4,7 @@ Flat screen pseudo-VR with webcam headtracking. - Look around corners by moving 
 
 ![Correct posture illustration](docs/assets/correct-posture.jpg)
 
-![Screenshot](docs/assets/Screenshot_20260301_193138.png)
+![Screenshot](docs/assets/Screenshot_20260301_195032.png)
 
 ## 1st Public Release
 
