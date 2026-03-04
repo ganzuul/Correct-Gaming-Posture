@@ -17,9 +17,17 @@ Just a regular webcam, better hardware also supported.
 ## Use
 
 1. Get Opentrack, may have to compile it yourself with ONNX to get NeuralNet Tracker input
-2. Start Opentrack on output UDP, 1270.0.0.1 port 42424 (default)
-3. Load mod with Minecraft, use Mod Menu to enable Headtracking in its tab, adjust the settings
+2. Start Opentrack with UDP output to `127.0.0.1` on port `4242`
+3. Load mod with Minecraft, open Mod Menu, and enable Head Tracking in the Correct Gaming Posture tab
 4. Correct Gaming Posture!
+
+## Current Features
+
+- Head-tracking camera translation with configurable gains and bounds
+- Optional 1€ smoothing filter (`OFF` or `ONE_EURO`)
+- Third-person head-tracking toggle
+- Targeting mode toggle (`VANILLA` or `ALIGNED`)
+- Experimental predictive targeting assist (off by default)
 
 ## Credits
 

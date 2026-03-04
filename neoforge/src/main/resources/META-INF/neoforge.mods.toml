@@ -7,9 +7,9 @@ license = "MIT"
 modId = "correct_gaming_posture"
 version = "${version}_neoforge"
 displayName = "Correct Gaming Posture"
-authors = "Blexyel"
+authors = ["Blexyel", "ganzuul"]
 description = '''
-Adds freelook, zoom, double hands, and head-tracking camera posture support.
+Head-tracking camera support with posture-focused controls, zoom, and freelook.
 '''
 logoFile = "assets/correct_gaming_posture/icon.png"
 

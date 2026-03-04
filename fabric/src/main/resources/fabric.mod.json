@@ -3,22 +3,23 @@
   "id": "correct_gaming_posture",
   "version": "${version}_fabric",
   "name": "Correct Gaming Posture",
-  "description": "Adds freelook, zoom, double hands, and head-tracking camera posture support.",
+  "description": "Head-tracking camera support with posture-focused controls.",
   "authors": [
+    "ganzuul",
     "Blexyel"
   ],
   "contact": {
-    "homepage": "https://github.com/Blexyel/simplehud"
+    "homepage": "https://github.com/ganzuul/Correct-Gaming-Posture"
   },
   "license": "MIT",
   "icon": "assets/correct_gaming_posture/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "wtf.blexyel.simpleCameraTweaks.fabric.SimpleCameraTweaksFabric"
+      "io.ganzuul.correctgamingposture.fabric.SimpleCameraTweaksFabric"
     ],
     "modmenu": [
-      "wtf.blexyel.simpleCameraTweaks.fabric.ModMenu"
+      "io.ganzuul.correctgamingposture.fabric.ModMenu"
     ]
   },
   "mixins": [
