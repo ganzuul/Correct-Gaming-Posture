@@ -1,6 +1,4 @@
 {
-  "key.correct_gaming_posture.freelook": "Freelook",
-  "key.correct_gaming_posture.zoom": "Zoom",
-  "key.correct_gaming_posture.offhand": "Toggle Offhand",
+  "key.correct_gaming_posture.headtracking_toggle": "Toggle Headtracking",
   "key.category.minecraft.correct_gaming_posture.main": "Correct Gaming Posture"
 }
